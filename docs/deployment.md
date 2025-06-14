@@ -85,22 +85,71 @@ npm run build
 npm run build
 ````
 
-## Docker развертывание
-Проект включает Docker-конфигурацию для простого развертывания.
+## Запуск с помощью Docker
+
+### Вариант 1: Запуск каждого сервиса отдельно
+
+Backend:
+
+```bash
+cd backend chmod +x build.sh run.sh docker-entrypoint.sh ./build.sh ./run.sh
+````
+
+Frontend:
+
+```bash
+cd frontend docker build
+--build-arg NODE_VERSION={NODE_VERSION} \ --build-arg NGINX_VERSION={NGINX_VERSION}
+--build-arg WORK_DIR={WORK_DIR} \ --build-arg NGINX_HTML_DIR={NGINX_HTML_DIR}
+--build-arg FRONTEND_PORT={FRONTEND_PORT} \ --build-arg API_URL={REACT_APP_API_URL}
+-t frontend:latest .
+docker run -d
+--name frontend
+--network app-network
+-p {FRONTEND_PORT}:{FRONTEND_PORT}
+frontend:latest
+```
+
+### Вариант 2: Docker Compose (рекомендуется)
 
 1. Сборка и запуск с Docker Compose
 ```bash
 docker-compose up -d
 ```
-
 Это развернет:
 - Backend сервис
 - Frontend сервис
 - MongoDB
 - Redis
 
+2. Остановка:
+```bash
+docker-compose down
+```
+
+
+## Мониторинг и логи
+
+Проверка статуса сервисов:
+```bash
+docker-compose ps
+```
+
+Просмотр логов:
+```bash
+# Все сервисы
+docker-compose logs -f
+# Конкретный сервис
+docker-compose logs -f backend docker-compose logs -f frontend
+```
+
+## Healthcheck
+- Frontend: http://localhost:${FRONTEND_PORT}/health
+- Backend: http://localhost:${BACKEND_PORT}/api/${API_VERSION}/health
+
 ## CI/CD
 Проект настроен для использования GitHub Actions:
 - Автоматическое тестирование при push
 - Автоматическое развертывание в staging при merge в develop
 - Автоматическое развертывание в production при создании release
+
