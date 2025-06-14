@@ -12,7 +12,7 @@
 1. Клонировать репозиторий
 ```bash
 git clone [git@github.com:NVBespalov/url-shortner.git](git@github.com:NVBespalov/url-shortner.git)
-cd url-shortener/backend
+cd url-shortner/backend
 ````
 
 3. Установить зависимости
@@ -31,7 +31,7 @@ cp .env.example .env
 env
 ```
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/url-shortener
+MONGODB_URI=mongodb://localhost:27017/url-shortner
 REDIS_URI=redis://localhost:6379
 # JWT
 JWT_SECRET=your-secret-key JWT_EXPIRES_IN=7d
