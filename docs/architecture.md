@@ -39,11 +39,15 @@ URL-сокращатель построен с использованием со
 ## Схема базы данных
 
 ### Коллекция URLs
-typescript interface Url { _id: ObjectId; originalUrl: string; shortCode: string; userId?: ObjectId; createdAt: Date; expiresAt?: Date; clicks: number; }
+```typescript
+interface Url { _id: ObjectId; originalUrl: string; shortCode: string; userId?: ObjectId; createdAt: Date; expiresAt?: Date; clicks: number; }
+```
 
 
 ### Коллекция Users
-typescript interface User { _id: ObjectId; email: string; password: string; urls: ObjectId[]; createdAt: Date; }
+```typescript
+interface User { _id: ObjectId; email: string; password: string; urls: ObjectId[]; createdAt: Date; }
+```
 
 ## Диаграмма взаимодействия компонентов
 
