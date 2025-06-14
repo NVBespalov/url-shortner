@@ -16,10 +16,10 @@ services:
       - frontend-network
       - monitoring-network
 
-#  # Backend API
+  # Backend API
 #  api:
 #    build:
-#      context: ./backend
+#      context: ./src/backend
 #      dockerfile: Dockerfile
 #    ports:
 #      - "4000:4000"
@@ -29,7 +29,7 @@ services:
 #    environment:
 #      - NODE_ENV=production
 #      - PORT=4000
-#      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
+#      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/urlshortener
 #      - REDIS_URI=redis://redis:6379
 #      - JWT_SECRET=${JWT_SECRET}
 #      - JWT_EXPIRES_IN=7d
@@ -43,55 +43,66 @@ services:
 #      options:
 #        max-size: "10m"
 #        max-file: "3"
-#
-#  # Analytics Service
-#  analytics:
-#    build:
-#      context: ./analytics
-#      dockerfile: Dockerfile
-#    ports:
-#      - "4001:4001"
-#    depends_on:
-#      - mongodb
-#      - redis
-#    environment:
-#      - NODE_ENV=production
-#      - PORT=4001
-#      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
-#      - REDIS_URI=redis://redis:6379
-#    networks:
-#      - backend-network
-#      - monitoring-network
-#
-#  # MongoDB
-#  mongodb:
-#    image: mongo:6
-#    ports:
-#      - "27017:27017"
-#    volumes:
-#      - mongodb_data:/data/db
-#    networks:
-#      - backend-network
-#    command: ["--replSet", "rs0", "--bind_ip_all"]
-#    healthcheck:
-#      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-#      interval: 10s
-#      timeout: 10s
-#      retries: 5
-#      start_period: 40s
-#
-#  # MongoDB Setup
-#  mongodb_setup:
-#    image: mongo:6
-#    depends_on:
-#      - mongodb
-#    networks:
-#      - backend-network
-#    command: >
-#      bash -c "echo 'Waiting for MongoDB to be ready...' &&
-#              sleep 10 &&
-#              mongosh mongodb://mongodb:27017/admin --eval 'rs.initiate()'"
-#
+  #
+  #  # Analytics Service
+  #  analytics:
+  #    build:
+  #      context: ./analytics
+  #      dockerfile: Dockerfile
+  #    ports:
+  #      - "4001:4001"
+  #    depends_on:
+  #      - mongodb
+  #      - redis
+  #    environment:
+  #      - NODE_ENV=production
+  #      - PORT=4001
+  #      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
+  #      - REDIS_URI=redis://redis:6379
+  #    networks:
+  #      - backend-network
+  #      - monitoring-network
+  #
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - backend-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  # PostgreSQL
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=urlshortener
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 #  # Redis
 #  redis:
 #    image: redis:7-alpine
@@ -166,7 +177,8 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_data:
+  postgres_data:
   redis_data:
   prometheus_data:
   grafana_data:
+  elasticsearch_data:
