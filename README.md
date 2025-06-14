@@ -55,7 +55,7 @@ git clone [https://github.com/username/url-shortner.git](https://github.com/user
 # Backend
 cd backend cp .env.example .env
 # Frontend
-cd ../frontend cp .env.example .env
+cd frontend cp .env.example .env
 ```
 3. Запустите приложение:
 ```bash

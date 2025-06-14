@@ -17,7 +17,9 @@ done
 
 # Замена переменных в конфигурации nginx
 echo "Configuring nginx..."
-envsubst '${REACT_APP_API_URL} ${PORT}' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf.tmp
+echo ${FRONTEND_PORT} frontend port.
+echo ${REACT_APP_API_URL} REACT_APP_API_URL.
+envsubst '${REACT_APP_API_URL} ${FRONTEND_PORT}' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf.tmp
 mv /etc/nginx/conf.d/default.conf.tmp /etc/nginx/conf.d/default.conf
 
 echo "Environment configuration completed"

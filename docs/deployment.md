@@ -98,14 +98,18 @@ cd backend chmod +x build.sh run.sh docker-entrypoint.sh ./build.sh ./run.sh
 Frontend:
 
 ```bash
-cd frontend docker build
---build-arg NODE_VERSION={NODE_VERSION} \ --build-arg NGINX_VERSION={NGINX_VERSION}
---build-arg WORK_DIR={WORK_DIR} \ --build-arg NGINX_HTML_DIR={NGINX_HTML_DIR}
---build-arg FRONTEND_PORT={FRONTEND_PORT} \ --build-arg API_URL={REACT_APP_API_URL}
--t frontend:latest .
+cd frontend
+docker build \
+  --build-arg FRONTEND_PORT=${FRONTEND_PORT} \
+  --build-arg REACT_APP_API_URL=${REACT_APP_API_URL} \
+  --build-arg REACT_APP_GA_ID=${REACT_APP_GA_ID} \
+  -t frontend:latest .
+docker network create frontend-network
 docker run -d
 --name frontend
---network app-network
+--network frontend-network
+-e FRONTEND_PORT={FRONTEND_PORT}
+-e REACT_APP_API_URL={REACT_APP_API_URL}
 -p {FRONTEND_PORT}:{FRONTEND_PORT}
 frontend:latest
 ```
@@ -114,7 +118,7 @@ frontend:latest
 
 1. Сборка и запуск с Docker Compose
 ```bash
-docker-compose up -d
+docker compose -f docker.compose.yml -p url-shortner up -d frontend
 ```
 Это развернет:
 - Backend сервис

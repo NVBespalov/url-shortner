@@ -7,10 +7,7 @@ set +a
 
 # Сборка Docker образа с переменными
 docker build \
-  --build-arg NODE_VERSION=${NODE_VERSION} \
-  --build-arg NGINX_VERSION=${NGINX_VERSION} \
-  --build-arg WORK_DIR=${WORK_DIR} \
-  --build-arg NGINX_HTML_DIR=${NGINX_HTML_DIR} \
-  --build-arg API_URL=${API_URL} \
   --build-arg FRONTEND_PORT=${FRONTEND_PORT} \
+  --build-arg REACT_APP_API_URL=${REACT_APP_API_URL} \
+  --build-arg REACT_APP_GA_ID=${REACT_APP_GA_ID} \
   -t frontend:latest .

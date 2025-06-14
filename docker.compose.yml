@@ -1,162 +1,161 @@
-version: '3.8'
-
 services:
   # Frontend
   frontend:
     build:
-      context: ./frontend
+      context: ./src/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
-    depends_on:
-      - api
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+#    depends_on:
+#      - api
     environment:
-      - REACT_APP_API_URL=http://localhost:4000
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
       - REACT_APP_GA_ID=${GA_ID}
+      - FRONTEND_PORT=${FRONTEND_PORT}
     networks:
       - frontend-network
       - monitoring-network
 
-  # Backend API
-  api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
-    depends_on:
-      - mongodb
-      - redis
-    environment:
-      - NODE_ENV=production
-      - PORT=4000
-      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
-      - REDIS_URI=redis://redis:6379
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRES_IN=7d
-      - BASE_URL=http://localhost:4000
-    networks:
-      - backend-network
-      - frontend-network
-      - monitoring-network
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  # Analytics Service
-  analytics:
-    build:
-      context: ./analytics
-      dockerfile: Dockerfile
-    ports:
-      - "4001:4001"
-    depends_on:
-      - mongodb
-      - redis
-    environment:
-      - NODE_ENV=production
-      - PORT=4001
-      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
-      - REDIS_URI=redis://redis:6379
-    networks:
-      - backend-network
-      - monitoring-network
-
-  # MongoDB
-  mongodb:
-    image: mongo:6
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    networks:
-      - backend-network
-    command: ["--replSet", "rs0", "--bind_ip_all"]
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-
-  # MongoDB Setup
-  mongodb_setup:
-    image: mongo:6
-    depends_on:
-      - mongodb
-    networks:
-      - backend-network
-    command: >
-      bash -c "echo 'Waiting for MongoDB to be ready...' &&
-              sleep 10 &&
-              mongosh mongodb://mongodb:27017/admin --eval 'rs.initiate()'"
-
-  # Redis
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - backend-network
-    command: redis-server --appendonly yes
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Prometheus
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    networks:
-      - monitoring-network
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-
-  # Grafana
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3001:3000"
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - grafana_data:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
-      - GF_USERS_ALLOW_SIGN_UP=false
-    networks:
-      - monitoring-network
-    depends_on:
-      - prometheus
-
-  # Node Exporter для системных метрик
-  node-exporter:
-    image: prom/node-exporter:latest
-    ports:
-      - "9100:9100"
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-    networks:
-      - monitoring-network
+#  # Backend API
+#  api:
+#    build:
+#      context: ./backend
+#      dockerfile: Dockerfile
+#    ports:
+#      - "4000:4000"
+#    depends_on:
+#      - mongodb
+#      - redis
+#    environment:
+#      - NODE_ENV=production
+#      - PORT=4000
+#      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
+#      - REDIS_URI=redis://redis:6379
+#      - JWT_SECRET=${JWT_SECRET}
+#      - JWT_EXPIRES_IN=7d
+#      - BASE_URL=http://localhost:4000
+#    networks:
+#      - backend-network
+#      - frontend-network
+#      - monitoring-network
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
+#
+#  # Analytics Service
+#  analytics:
+#    build:
+#      context: ./analytics
+#      dockerfile: Dockerfile
+#    ports:
+#      - "4001:4001"
+#    depends_on:
+#      - mongodb
+#      - redis
+#    environment:
+#      - NODE_ENV=production
+#      - PORT=4001
+#      - MONGODB_URI=mongodb://mongodb:27017/urlshortener
+#      - REDIS_URI=redis://redis:6379
+#    networks:
+#      - backend-network
+#      - monitoring-network
+#
+#  # MongoDB
+#  mongodb:
+#    image: mongo:6
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongodb_data:/data/db
+#    networks:
+#      - backend-network
+#    command: ["--replSet", "rs0", "--bind_ip_all"]
+#    healthcheck:
+#      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+#      interval: 10s
+#      timeout: 10s
+#      retries: 5
+#      start_period: 40s
+#
+#  # MongoDB Setup
+#  mongodb_setup:
+#    image: mongo:6
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - backend-network
+#    command: >
+#      bash -c "echo 'Waiting for MongoDB to be ready...' &&
+#              sleep 10 &&
+#              mongosh mongodb://mongodb:27017/admin --eval 'rs.initiate()'"
+#
+#  # Redis
+#  redis:
+#    image: redis:7-alpine
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - redis_data:/data
+#    networks:
+#      - backend-network
+#    command: redis-server --appendonly yes
+#    healthcheck:
+#      test: ["CMD", "redis-cli", "ping"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#
+#  # Prometheus
+#  prometheus:
+#    image: prom/prometheus:latest
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+#      - prometheus_data:/prometheus
+#    networks:
+#      - monitoring-network
+#    command:
+#      - '--config.file=/etc/prometheus/prometheus.yml'
+#      - '--storage.tsdb.path=/prometheus'
+#      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+#      - '--web.console.templates=/usr/share/prometheus/consoles'
+#
+#  # Grafana
+#  grafana:
+#    image: grafana/grafana:latest
+#    ports:
+#      - "3001:3000"
+#    volumes:
+#      - ./grafana/provisioning:/etc/grafana/provisioning
+#      - grafana_data:/var/lib/grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+#      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+#      - GF_USERS_ALLOW_SIGN_UP=false
+#    networks:
+#      - monitoring-network
+#    depends_on:
+#      - prometheus
+#
+#  # Node Exporter для системных метрик
+#  node-exporter:
+#    image: prom/node-exporter:latest
+#    ports:
+#      - "9100:9100"
+#    volumes:
+#      - /proc:/host/proc:ro
+#      - /sys:/host/sys:ro
+#      - /:/rootfs:ro
+#    command:
+#      - '--path.procfs=/host/proc'
+#      - '--path.sysfs=/host/sys'
+#      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+#    networks:
+#      - monitoring-network
 
 networks:
   frontend-network:
