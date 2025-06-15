@@ -2,8 +2,9 @@ import {useForm, Controller} from 'react-hook-form';
 import {TextField, Button, Box, Paper} from '@mui/material';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {createUrlThunk} from "../entities/url/model";
-import {useAppDispatch} from "../shared/hooks";
+import {useAppDispatch} from "../../../app/hooks.ts";
+import {createUrlThunk} from "../model/urlThunk.ts";
+
 
 const schema = yup.object().shape({
     url: yup.string().url('Некорректный URL').required('Введите ссылку'),

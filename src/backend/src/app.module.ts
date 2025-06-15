@@ -9,13 +9,11 @@ import {ConfigModule} from "@nestjs/config";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-
     DatabaseModule,
     LoggerModule,
     UserModule,
     AuthModule,
     UrlModule
-
   ],
   controllers: [],
   providers: [],

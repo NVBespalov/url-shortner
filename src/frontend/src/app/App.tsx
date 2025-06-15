@@ -1,6 +1,9 @@
 import './App.css'
-import {createTheme, ThemeProvider} from "@mui/material";
-import {AppRouter} from "./AppRouter.tsx";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { AppRouter } from "./AppRouter.tsx";
+import { useInitProfile } from "../features/profile/model/useInitProfile.ts";
+import { useLocation } from 'react-router-dom';
+import {AppBar} from "../shared/ui/AppBar.tsx";
 
 const theme = createTheme({
     palette: {
@@ -8,11 +11,18 @@ const theme = createTheme({
     },
 });
 
-export const App = () => (
-    <ThemeProvider theme={theme}>
-        <AppRouter />
-    </ThemeProvider>
-);
+export const App = () => {
+    useInitProfile();
+    const location = useLocation();
+    
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
+    return (
+        <ThemeProvider theme={theme}>
+            {!isAuthPage && <AppBar />}
+            <AppRouter/>
+        </ThemeProvider>
+    );
+};
 
-export default App
+export default App;
