@@ -13,6 +13,7 @@ export class UrlController {
   @ApiOperation({ summary: 'Сократить ссылку' })
   @ApiBody({ type: CreateUrlDto })
   @ApiResponse({ status: 201, description: 'Сокращённая ссылка создана' })
+  @ApiResponse({ status: 400, description: 'Некорректные данные' })
   @UseGuards(JwtAuthGuard)
   @Post('shorten')
   async shorten(@Body() dto: CreateUrlDto, @Req() req) {

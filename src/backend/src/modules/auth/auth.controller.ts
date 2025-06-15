@@ -1,13 +1,14 @@
-import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import {ApiTags, ApiOperation, ApiBody, ApiResponse, ApiBearerAuth} from '@nestjs/swagger';
+import {Body, Controller, Post, Request, UseGuards} from '@nestjs/common';
+import {AuthService} from './auth.service';
+import {JwtAuthGuard} from './jwt-auth.guard';
+import {ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {RegisterDto} from "./dto/register.dto";
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService) {
+    }
 
     @Post('register')
     @ApiOperation({summary: 'Register new user'})
@@ -16,8 +17,8 @@ export class AuthController {
             type: 'object',
             properties: {
                 password: {type: 'string', example: 'password123'},
-                email: {type: 'string', example: '<EMAIL>'},
-                name: {type: 'string', example: '<NAME>'}
+                email: {type: 'string', example: 'email@email.com'},
+                name: {type: 'string', example: 'John Doe'}
             }
         }
     })
@@ -33,7 +34,7 @@ export class AuthController {
         schema: {
             type: 'object',
             properties: {
-                email: {type: 'string', example: 'john.doe'},
+                email: {type: 'string', example: 'email@email.com'},
                 password: {type: 'string', example: 'password123'}
             }
         }
