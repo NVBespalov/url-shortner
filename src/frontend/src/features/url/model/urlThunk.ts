@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUrls, setLoading, setError } from './urlSlice';
-import {fetchUserUrls} from "../api/urlApi.ts";
+import {fetchUserUrls} from "../api/urlApi";
 import {authApi} from "../../../shared/api";
-import type {Url} from "./types.ts";
-import {getRedirectUrl} from "../../../shared/utils/url.ts";
+import type {Url} from "./types";
+import {getRedirectUrl} from "../../../shared/utils/url";
 
 export const loadUserUrls = createAsyncThunk(
     'urls/loadUserUrls',

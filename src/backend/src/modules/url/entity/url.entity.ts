@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, JoinColumn, OneToMany} from 'typeorm';
 import {User} from '../../user/entity/user.entity';
+import {UrlClick} from "../../statistic/entity/url-click.entity";
 
 @Entity()
 export class Url {
@@ -22,6 +23,7 @@ export class Url {
     @JoinColumn({name: 'userId'})
     user: User;
 
-    @Column({nullable: true, default: 0})
-    clicks: number;
+    @OneToMany(() => UrlClick, click => click.url)
+    clicks: UrlClick[];
+
 }

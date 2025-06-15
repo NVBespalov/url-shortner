@@ -5,12 +5,16 @@ import { ApiBearerAuth, ApiOperation, ApiTags, ApiResponse, ApiParam, ApiBody } 
 import { CreateUrlDto } from './dto/create-url.dto';
 import {UrlResponseDto} from "./dto/url-response.dto";
 import { Request } from 'express';
+import {StatisticsService} from "../statistic/statistic.service";
 
 
 @ApiTags('URL')
 @Controller('url')
 export class UrlController {
-  constructor(private readonly urlService: UrlService) {}
+  constructor(
+      private readonly urlService: UrlService,
+      private readonly statisticsService: StatisticsService,
+  ) {}
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Сократить ссылку' })
@@ -55,13 +59,14 @@ export class UrlController {
   }
 
   // Добавляем новый метод для редиректа
-  @Get('redirect/:shortId')
+  @Get('redirect/:shortCode')
   @ApiOperation({ summary: 'Редирект на оригинальный URL по короткому идентификатору' })
   @ApiResponse({ status: 302, description: 'Успешный редирект' })
   @ApiResponse({ status: 404, description: 'Ссылка не найдена' })
   @Redirect()
-  async redirectToOriginal(@Param('shortId') shortId: string) {
-    const url = await this.urlService.incrementClicksAndGetOriginal(shortId);
+  async redirectToOriginal(@Param('shortCode') shortCode: string, @Req() {headers, ip}: Request) {
+    const url = await this.urlService.getOriginal(shortCode);
+    await this.statisticsService.saveClick(url.id, ip ?? '0.0.0.0', headers['user-agent']);
     return { url: url.originalUrl };
   }
 

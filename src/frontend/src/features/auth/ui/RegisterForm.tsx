@@ -8,16 +8,17 @@ import {
     CircularProgress,
     Alert,
 } from '@mui/material';
-import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import {registerUser} from "../model/registerUser.ts";
-import {registerSchema} from "../../../shared/validation/registerSchema.ts";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {registerUser} from "../model/registerUser";
+import {registerSchema} from "../../../shared/validation/registerSchema";
+import {useNavigate} from "react-router-dom";
 
 export const RegistrationForm = () => {
     const dispatch = useAppDispatch();
     const { loading, error, data } = useAppSelector(
         (state) => state.registration,
     );
-
+    const navigate = useNavigate();
     const {
         control,
         handleSubmit,
@@ -33,7 +34,11 @@ export const RegistrationForm = () => {
     });
 
     const onSubmit = (formData: FieldValues) => {
-        dispatch(registerUser(formData));
+        debugger
+        dispatch(registerUser({
+            userData: formData,
+            navigate
+        }));
     };
 
     if (data) {
@@ -138,6 +143,28 @@ export const RegistrationForm = () => {
             >
                 {loading ? <CircularProgress size={24} /> : 'Зарегистрироваться'}
             </Button>
+            <Box sx={{mt: 2, textAlign: 'center'}}>
+                <Typography variant="body2">
+                    Уже есть аккаунт?{' '}
+                    <Button
+                        onClick={() => navigate('/login')}
+                        sx={{
+                            textTransform: 'none',
+                            textAlign: 'left',
+                            p: 0,
+                            minWidth: 'auto',
+                            color: 'primary.main',
+                            '&:hover': {
+                                textDecoration: 'underline',
+                                background: 'transparent'
+                            }
+                        }}
+                    >
+                        Войти
+                    </Button>
+                </Typography>
+            </Box>
+
         </Box>
     );
 };

@@ -1,2 +1,2 @@
-export * from './use-app-dispatch.hook.ts'
-export * from './use-app-selector.hook.ts'
+export * from './use-app-dispatch.hook'
+export * from './use-app-selector.hook'

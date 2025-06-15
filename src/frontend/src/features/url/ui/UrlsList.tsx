@@ -1,9 +1,9 @@
 import {Alert, Box, Button, Chip, CircularProgress, IconButton, List, ListItem, Paper, Typography} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import type {Url} from "../model/types.ts";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import type {Url} from "../model/types";
 import {useEffect} from "react";
-import {deleteUrlThunk, loadUserUrls, openShortUrl} from "../model/urlThunk.ts";
+import {deleteUrlThunk, loadUserUrls, openShortUrl} from "../model/urlThunk";
 import {useNavigate} from "react-router-dom";
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -102,7 +102,7 @@ export const UrlsList = () => {
                         <Box sx={{display: 'flex', gap: 1, mt: 1}}>
                             <Chip
                                 size="small"
-                                label={`Переходов: ${url.clicks || 0}`}
+                                label={`Переходов: ${url.clicks?.length || 0}`}
                                 color="primary"
                                 variant="outlined"
                             />

@@ -1,9 +1,9 @@
 import './App.css'
 import { createTheme, ThemeProvider } from "@mui/material";
-import { AppRouter } from "./AppRouter.tsx";
-import { useInitProfile } from "../features/profile/model/useInitProfile.ts";
+import { AppRouter } from "./AppRouter";
+import { useInitProfile } from "../features/profile/model/useInitProfile";
 import { useLocation } from 'react-router-dom';
-import {AppBar} from "../shared/ui/AppBar.tsx";
+import {AppBar} from "../shared/ui/AppBar";
 
 const theme = createTheme({
     palette: {

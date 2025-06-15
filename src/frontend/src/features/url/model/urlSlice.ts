@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type {Url} from "./types.ts";
-import {loadUrlByShorCodeThunk} from "./urlThunk.ts";
+import type {Url} from "./types";
+import {loadUrlByShorCodeThunk} from "./urlThunk";
 
 
 

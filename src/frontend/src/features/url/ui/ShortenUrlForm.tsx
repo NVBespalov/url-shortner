@@ -2,8 +2,8 @@ import {useForm, Controller} from 'react-hook-form';
 import {TextField, Button, Box, Paper} from '@mui/material';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useAppDispatch} from "../../../app/hooks.ts";
-import {createUrlThunk} from "../model/urlThunk.ts";
+import {useAppDispatch} from "../../../app/hooks";
+import {createUrlThunk} from "../model/urlThunk";
 
 
 const schema = yup.object().shape({
@@ -35,6 +35,7 @@ export const ShortenUrlForm = () => {
                                 label="Вставьте длинную ссылку"
                                 fullWidth
                                 error={!!fieldState.error}
+                                placeholder="Вставьте длинную ссылку"
                                 helperText={fieldState.error?.message}
                                 variant="outlined"
                             />

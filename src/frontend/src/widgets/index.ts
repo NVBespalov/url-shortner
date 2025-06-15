@@ -1,2 +1,2 @@
-export * from './ShortenUrlWidget.tsx'
-export * from './UrlsList.tsx'
+export * from './ShortenUrl'
+export * from './UrlsList'

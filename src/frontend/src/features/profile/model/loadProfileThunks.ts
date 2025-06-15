@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {clearProfile, setLoading, setProfile} from './profileSlice';
-import {fetchProfile} from "../api/profileApi.ts";
-import {logout} from "../../auth/model/authSlice.ts";
+import {fetchProfile} from "../api/profileApi";
+import {logout} from "../../auth/model/authSlice";
 
 export const loadProfile = createAsyncThunk(
     'auth/loadProfile',

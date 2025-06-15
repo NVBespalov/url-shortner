@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type {RegistrationState} from "./types.ts";
-import {registerUser} from "./registerUser.ts";
+import type {RegistrationState} from "./types";
+import {registerUser} from "./registerUser";
 
 
 const initialState: RegistrationState = {

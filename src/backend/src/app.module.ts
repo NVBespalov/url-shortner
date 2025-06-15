@@ -3,8 +3,9 @@ import {LoggerModule} from "./modules/logger/logger.module";
 import {DatabaseModule} from "./database/database.module";
 import {UserModule} from "./modules/user/user.module";
 import {AuthModule} from "./modules/auth/auth.module";
-import {UrlModule} from "./modules/url/user.module";
+import {UrlModule} from "./modules/url/url.module";
 import {ConfigModule} from "@nestjs/config";
+import {StatisticModule} from "./modules/statistic/statistic.module";
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import {ConfigModule} from "@nestjs/config";
     LoggerModule,
     UserModule,
     AuthModule,
-    UrlModule
+    UrlModule,
+    StatisticModule
   ],
   controllers: [],
   providers: [],

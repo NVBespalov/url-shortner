@@ -2,10 +2,11 @@ import {useParams} from 'react-router-dom';
 import {Card, CardContent, Typography, Box, Chip, Paper, Button, CircularProgress} from '@mui/material';
 
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import type {Url} from "../model/types.ts";
-import {QRCodeDisplay} from "../../qr-code/ui/QRCodeDisplay.tsx";
-import {loadUrlByShorCodeThunk, openShortUrl} from "../model/urlThunk.ts";
+import type {Url} from "../model/types";
+import {QRCodeDisplay} from "../../qr-code/ui/QRCodeDisplay";
+import {loadUrlByShorCodeThunk, openShortUrl} from "../model/urlThunk";
 import {useEffect} from "react";
+import {LinkAnalytics} from "../../features/link-analytics/ui/LinkAnalytics/LinkAnalytics";
 
 export const UrlDetails = () => {
     const {shortCode} = useParams();
@@ -21,6 +22,7 @@ export const UrlDetails = () => {
             dispatch(loadUrlByShorCodeThunk(shortCode));
         }
     }, [shortCode, dispatch, url]);
+
     if (isLoading) {
         return <CircularProgress />;
     }
@@ -77,9 +79,11 @@ export const UrlDetails = () => {
                     <Box sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
                         <QRCodeDisplay shortCode={url.shortCode}/>
                     </Box>
-
+                    <LinkAnalytics
+                        sortCode={url.shortCode}
+                    />
                     <Box sx={{display: 'flex', gap: 1, mt: 2}}>
-                        <Chip label={`Переходов: ${url.clicks || 0}`} color="primary"/>
+                        <Chip label={`Переходов: ${url.clicks?.length || 0}`} color="primary"/>
                         <Chip label={`Создано: ${new Date(url.createdAt).toLocaleDateString()}`}/>
                     </Box>
                 </Box>

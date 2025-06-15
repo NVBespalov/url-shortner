@@ -1,6 +1,6 @@
-import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {useEffect, useRef} from "react";
-import {loadProfile} from "./authThunks.ts";
+import {loadProfile} from "./loadProfileThunks";
 
 export const useInitProfile = () => {
     const dispatch = useAppDispatch();

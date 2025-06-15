@@ -17,12 +17,15 @@ export class UrlService {
     }
 
     async findByShort(shortCode: string) {
-        return this.urls.findOne({ where: { shortCode } });
+        return this.urls.findOne({ where: { shortCode }, relations: { clicks: true} });
     }
     async findAllByUserId(userId: string) {
         return this.urls.find({
             where: { user : {id: userId} },
-            order: { createdAt: 'DESC' }
+            order: { createdAt: 'DESC' },
+            relations: {
+                clicks: true
+            }
         });
     }
 
@@ -33,7 +36,7 @@ export class UrlService {
         });
     }
 
-    async incrementClicksAndGetOriginal(shortCode: string) {
+    async getOriginal(shortCode: string) {
         const url = await this.urls.findOne({
             where: { shortCode },
         });
@@ -42,9 +45,6 @@ export class UrlService {
             throw new NotFoundException('Ссылка не найдена');
         }
 
-
-        url.clicks = url.clicks + 1;
-        await this.urls.save(url);
 
         return url;
 

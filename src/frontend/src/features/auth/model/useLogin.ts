@@ -1,10 +1,9 @@
-// features/auth/model/useLogin.ts
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {TOKEN_KEY} from "../../../shared/const/auth.ts";
-import {AUTH_ERROR_MESSAGE} from "./const.ts";
-import {loginThunk} from "./authSlice.ts";
-import {useAppDispatch} from "../../../app/hooks.ts";
+import {TOKEN_KEY} from "../../../shared/const/auth";
+import {AUTH_ERROR_MESSAGE} from "./const";
+import {loginThunk} from "./authSlice";
+import {useAppDispatch} from "../../../app/hooks";
 
 
 export const useLogin = () => {

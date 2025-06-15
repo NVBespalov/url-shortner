@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TOKEN_KEY} from "../const/auth.ts";
+import {TOKEN_KEY} from "../const/auth";
 
 export const api = axios.create({
     baseURL: '/api/v1',

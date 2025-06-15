@@ -1,9 +1,8 @@
-// src/features/qr-code/ui/QRCodeDisplay/QRCodeDisplay.tsx
 import { memo } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Box, Typography, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import {getRedirectUrl} from "../../../shared/utils/url.ts";
+import {getRedirectUrl} from "../../../shared/utils/url";
 
 interface QRCodeDisplayProps {
     shortCode: string;

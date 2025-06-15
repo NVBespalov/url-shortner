@@ -1,3 +1,3 @@
-import {UrlsList} from "../features/url/ui/UrlsList.tsx";
+import {UrlsList} from "../features/url/ui/UrlsList";
 
 export const UrlsListWidget = () => <UrlsList/>;

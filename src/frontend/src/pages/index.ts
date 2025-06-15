@@ -1,2 +1,2 @@
-export * from './MainPage.tsx'
-export * from './NotFound.tsx'
+export * from './MainPage'
+export * from './NotFound'

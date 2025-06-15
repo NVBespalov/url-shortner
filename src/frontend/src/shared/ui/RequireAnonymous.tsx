@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import type {RootState} from "../../app/store.ts";
+import type {RootState} from "../../app/store/store";
+
 
 interface RequireAnonymousProps {
     children: React.ReactElement;

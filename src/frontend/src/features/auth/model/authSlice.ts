@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice,} from '@reduxjs/toolkit';
 import {login} from '../api/authApi';
 
-import {TOKEN_KEY} from "../../../shared/const/auth.ts";
-import {AUTH_ERROR_MESSAGE} from "./const.ts";
+import {TOKEN_KEY} from "../../../shared/const/auth";
+import {AUTH_ERROR_MESSAGE} from "./const";
 
-import {loadProfile} from "../../profile/model/authThunks.ts";
+import {loadProfile} from "../../profile/model/loadProfileThunks";
 
 interface AuthState {
     token: string | null;

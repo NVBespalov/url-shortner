@@ -1,4 +1,3 @@
-// src/features/qr-code/model/slice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import {type QRCodeState } from './types';
 

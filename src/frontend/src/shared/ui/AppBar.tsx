@@ -1,7 +1,7 @@
 import { AppBar as MuiAppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {logout} from "../../features/auth/model/authSlice.ts";
+import {logout} from "../../features/auth/model/authSlice";
 
 
 export const AppBar = () => {

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {api} from "../../../shared/api";
 import type {FieldValues} from "react-hook-form";
-import type {RegistrationResponse} from "./types.ts";
+import type {RegistrationResponse} from "./types";
 import type {NavigateFunction} from "react-router-dom";
 
 
@@ -11,6 +11,7 @@ export const registerUser = createAsyncThunk<
     { rejectValue: string }
 >('auth/register', async ({userData, navigate}, {rejectWithValue}) => {
     try {
+        debugger
         const {confirmPassword, ...requestData} = userData;
         const response = await api.post('/auth/register', requestData);
         navigate('/login');
