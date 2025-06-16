@@ -1,8 +1,7 @@
 # URL Shortener Service
 ![GitHub](https://img.shields.io/github/license/NVBespalov/url-shortner)
 ![GitHub last commit](https://img.shields.io/github/last-commit/NVBespalov/url-shortner)
-![Build Status](https://img.shields.io/github/actions/workflow/status/NVBespalov/url-shortner/ci.yml?branch=main)
-![Build Status](https://img.shields.io/github/actions/workflow/status/NVBespalov/url-shortner/ci.yml)
+![Build Status](https://img.shields.io/github/actions/workflow/status/NVBespalov/url-shortner/frontend.yml?branch=main)
 ![Coverage](https://img.shields.io/codecov/c/github/NVBespalov/url-shortner)
 
 Современный сервис для сокращения URL-адресов с открытым исходным кодом. Построен с использованием NestJS и React.
