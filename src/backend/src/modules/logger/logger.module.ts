@@ -8,9 +8,12 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
         ConfigModule,
         ElasticsearchModule.registerAsync({
             imports: [ConfigModule],
-            useFactory: async (configService: ConfigService) => ({
-                node: configService.getOrThrow('ELASTICSEARCH_NODE'),
-            }),
+            useFactory: async (configService: ConfigService) => {
+                console.log(configService.getOrThrow('ELASTICSEARCH_NODE'), 'node');
+                return ({
+                    node: configService.getOrThrow('ELASTICSEARCH_NODE'),
+                });
+            },
             inject: [ConfigService],
         }),
     ],

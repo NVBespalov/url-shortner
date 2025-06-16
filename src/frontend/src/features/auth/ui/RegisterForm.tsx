@@ -34,7 +34,6 @@ export const RegistrationForm = () => {
     });
 
     const onSubmit = (formData: FieldValues) => {
-        debugger
         dispatch(registerUser({
             userData: formData,
             navigate
@@ -133,7 +132,9 @@ export const RegistrationForm = () => {
                     />
                 )}
             />
-            {error && <Alert severity="error">{error as string}</Alert>}
+            {
+                typeof error === 'string' ? <Alert severity="error">{error}</Alert> : ''
+            }
             <Button
                 type="submit"
                 fullWidth

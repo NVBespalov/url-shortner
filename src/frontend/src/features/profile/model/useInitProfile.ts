@@ -5,8 +5,8 @@ import {loadProfile} from "./loadProfileThunks";
 export const useInitProfile = () => {
     const dispatch = useAppDispatch();
     const token = useAppSelector(state => state.auth.token);
-    const profile = useAppSelector(state => state.auth.profile);
-    const profileIsLoading = useAppSelector(state => state.profile.isLoading);
+    const profile = useAppSelector(state => state.profile);
+    const profileIsLoading = useAppSelector(state => state.profile.loading);
     const initRef = useRef(false);
 
     useEffect(() => {

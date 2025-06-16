@@ -1,0 +1,14 @@
+#src/frontend/node_modules
+src/frontend/dist
+src/frontend/build
+src/frontend/*.log
+src/frontend/*.test.*
+src/frontend/coverage
+src/frontend/__mocks__/
+#src/backend/node_modules
+src/backend/dist
+src/backend/build
+src/backend/*.log
+src/backend/*.test.*
+src/backend/coverage
+src/backend/__mocks__/
