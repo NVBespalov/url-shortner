@@ -6,7 +6,7 @@ export class UrlClick {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Url, url => url.clicks)
+    @ManyToOne(() => Url, url => url.clicks, { onDelete: 'CASCADE' })
     url: Url;
 
     @Column()

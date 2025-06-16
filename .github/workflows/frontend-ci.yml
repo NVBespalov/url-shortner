@@ -1,0 +1,54 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  lint-build-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (eslint)
+        run: npm run lint
+
+      - name: Type check (TypeScript)
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+#      - name: Run integration tests (jest)
+#        run: |
+#          npm run test -- --ci --coverage --reporters=default --reporters=github-actions
+#        env:
+#          CI: true
+#          TZ: Europe/Moscow
+
+#      - name: Upload coverage report
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: coverage
+#          path: coverage/
+
+      - name: Annotate test failures (if any)
+        if: failure()
+        run: echo "Test failures. Please check the logs and annotations."
