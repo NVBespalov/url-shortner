@@ -1,2 +1,2 @@
-export * from './ShortenUrl'
-export * from './UrlsList'
+export * from './ShortenUrl';
+export * from './UrlsList';

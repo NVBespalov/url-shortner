@@ -1,6 +1,5 @@
-import {api} from "../../../shared/api";
-
+import { api } from '../../../shared/api';
 
 export const login = async (data: { email: string; password: string }) => {
-    return api.post(`/auth/login`, data);
+  return api.post(`/auth/login`, data);
 };

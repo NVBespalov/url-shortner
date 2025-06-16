@@ -7,7 +7,8 @@
     "dev": "vite",
     "test": "jest",
     "build": "tsc -b && vite build",
-    "lint": "eslint ../../frontend",
+    "lint": "eslint",
+    "format": "prettier --write .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -37,11 +38,13 @@
     "@types/redux-mock-store": "^1.5.0",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",
+    "prettier": "^3.5.3",
     "redux-mock-store": "^1.5.5",
     "ts-jest": "^29.4.0",
     "typescript": "~5.8.3",

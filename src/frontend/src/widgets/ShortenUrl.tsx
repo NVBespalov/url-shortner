@@ -1,3 +1,3 @@
-import {ShortenUrlForm} from "../features/url/ui/ShortenUrlForm";
+import { ShortenUrlForm } from '../features/url/ui/ShortenUrlForm';
 
 export const ShortenUrlWidget = () => <ShortenUrlForm />;

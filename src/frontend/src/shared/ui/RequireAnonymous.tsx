@@ -1,20 +1,19 @@
 import React from 'react';
-import {useSelector} from "react-redux";
-import type {RootState} from "../../app/store/store";
-
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store/store';
 
 interface RequireAnonymousProps {
-    children: React.ReactElement;
+  children: React.ReactElement;
 }
 
 export const RequireAnonymous: React.FC<RequireAnonymousProps> = ({ children }) => {
-    const token = useSelector((state: RootState) => state.auth.token);
-    const isAuth = Boolean(token);
+  const token = useSelector((state: RootState) => state.auth.token);
+  const isAuth = Boolean(token);
 
-    if (isAuth) {
-        window.location.href = '/';
-        return null;
-    }
+  if (isAuth) {
+    window.location.href = '/';
+    return null;
+  }
 
-    return children;
+  return children;
 };

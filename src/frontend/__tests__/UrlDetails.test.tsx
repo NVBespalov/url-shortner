@@ -1,10 +1,9 @@
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
-import {urlsReducer} from "../src/features/url/model/urlSlice";
-import {analyticsReducer} from "../src/features/features/link-analytics/model/analyticsSlice";
-import {UrlDetails} from "../src/features/url/ui/UrlDetails";
-
+import { urlsReducer } from '../src/features/url/model/urlSlice';
+import { analyticsReducer } from '../src/features/features/link-analytics/model/analyticsSlice';
+import { UrlDetails } from '../src/features/url/ui/UrlDetails';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -46,7 +45,7 @@ test('Показывает оригинальный URL', () => {
   render(
     <Provider store={store}>
       <UrlDetails />
-    </Provider>
+    </Provider>,
   );
 
   expect(screen.getByText(/https:\/\/yandex\.ru/i)).not.toBeNull();

@@ -2,10 +2,10 @@ import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 
 if (!globalThis.TextEncoder) {
-    // @ts-ignore
-    globalThis.TextEncoder = TextEncoder;
+  // @ts-ignore
+  globalThis.TextEncoder = TextEncoder;
 }
 if (!globalThis.TextDecoder) {
-    // @ts-ignore
-    globalThis.TextDecoder = TextDecoder;
+  // @ts-ignore
+  globalThis.TextDecoder = TextDecoder;
 }

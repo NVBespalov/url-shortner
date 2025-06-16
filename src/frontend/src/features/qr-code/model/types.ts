@@ -1,5 +1,5 @@
 export interface QRCodeState {
-    qrCodeData: string | null;
-    isLoading: boolean;
-    error: string | null;
+  qrCodeData: string | null;
+  isLoading: boolean;
+  error: string | null;
 }
