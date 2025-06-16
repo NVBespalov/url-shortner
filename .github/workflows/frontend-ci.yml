@@ -21,17 +21,6 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
 
-      - name: Debug working directory
-        run: |
-          echo "PWD: $(pwd)"
-          echo "Files:"
-          ls -la
-      - name: Check frontend directory
-        run: |
-          cd src/frontend
-          pwd
-          ls -la
-
       - name: Install dependencies
         run: cd src/frontend && npm ci
 
