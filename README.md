@@ -1,7 +1,7 @@
 # URL Shortener Service
 ![GitHub](https://img.shields.io/github/license/NVBespalov/url-shortner)
 ![GitHub last commit](https://img.shields.io/github/last-commit/NVBespalov/url-shortner)
-[![Build Status](https://github.com/NVBespalov/url-shortner/workflows/Build%20Project/badge.svg)](https://github.com/NVBespalov/url-shortner/actions)
+![Build Status](https://img.shields.io/github/actions/workflow/status/NVBespalov/url-shortner/ci.yml?branch=main)
 ![Build Status](https://img.shields.io/github/actions/workflow/status/NVBespalov/url-shortner/ci.yml)
 ![Coverage](https://img.shields.io/codecov/c/github/NVBespalov/url-shortner)
 
@@ -21,7 +21,7 @@
 
 ### Backend
 - [NestJS](https://nestjs.com/) - основной фреймворк
-- [MongoDB](https://www.mongodb.com/) - база данных
+- [PostgreSQL](https://www.postgresql.org/) - база данных
 - [Redis](https://redis.io/) - кэширование
 - [TypeScript](https://www.typescriptlang.org/) - язык программирования
 - [Jest](https://jestjs.io/) - тестирование
