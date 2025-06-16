@@ -23,6 +23,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - name: Debug working directory
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Files:"
+          ls -la
+      - name: Check frontend directory
+        run: |
+          cd src/frontend
+          pwd
+          ls -la
 
       - name: Install dependencies
         run: cd src/frontend && npm ci
